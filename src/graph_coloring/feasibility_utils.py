@@ -1,12 +1,5 @@
-from dwave_networkx.algorithms.coloring import is_vertex_coloring
 import numpy as np
-import networkx as nx
-
-
-def check_coloring(G, coloring):
-    # check that the feasibility of the coloring
-    feasible_coloring = is_vertex_coloring(G, coloring)
-    print('Found vertex coloring? {}'.format(feasible_coloring))   
+import networkx as nx  
 
 
 def _check_maximal(A, x):
