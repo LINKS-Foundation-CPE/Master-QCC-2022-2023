@@ -3,7 +3,7 @@ LINKS Course materials for Polytechnic of Turin **Master in Quantum communicatio
 
 
 ## Maximum Independent Set (MIS) tutorial 
-[MIS colab](https://github.com/LINKS-Foundation-CPE/cineca_aspc/blob/main/UD-mis/UD-mis.ipynb) tutorial provides the basic tools to implement MIS problems through the [Pulser](https://pulser.readthedocs.io/) library, leveraging the Rydberg Blockade effect. Furthermore, it highlights the effect of the optimization approach to make the optimal solutions more likely to be measured.
+MIS tutorial provides the basic tools to implement MIS problems through the [Pulser](https://pulser.readthedocs.io/) library, leveraging the Rydberg Blockade effect. Furthermore, it highlights the effect of the optimization approach to make the optimal solutions more likely to be measured.
 
 ## Graph coloring (GC) tutorial
 These tutorials concern GC problems solutions through iterative MIS problem solution, exploiting [Pulser](https://pulser.readthedocs.io/) software. Two different approaches are shown:

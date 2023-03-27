@@ -100,7 +100,6 @@ def plot_sol(orig_G, coloring, num_colors):
         f = plt.figure()
         nx.draw(orig_G, pos=dict(orig_G.nodes(data='pos')), node_color=list(coloring_copy.values()), with_labels=True, node_size=500,
                 font_weight="bold", node_shape="o", ax=f.add_subplot(111))            
-        # ax= plt.gca()
-        # ax.collections[0].set_edgecolor("#000000")
+        nx.draw_networkx_edges(orig_G, dict(orig_G.nodes(data='pos')))
         plt.show()
         plt.close()
