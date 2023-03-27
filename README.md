@@ -1,5 +1,5 @@
 # Master-QCC-2022-2023
-LINKS Course materials for Polytechnic of Turin Master in Quantum communication and computing 2022 2023
+LINKS Course materials for Polytechnic of Turin **Master in Quantum communication and computing 2022-2023**
 
 
 ## Maximum Independent Set (MIS) tutorial 
@@ -7,8 +7,10 @@ LINKS Course materials for Polytechnic of Turin Master in Quantum communication 
 
 ## Graph coloring (GC) tutorial
 These tutorials concern GC problems solutions through iterative MIS problem solution, exploiting [Pulser](https://pulser.readthedocs.io/) software. Two different approaches are shown:
-- Greedy-it-MIS approach: solve iteratively MIS problem and assign one color at a time
+- Greedy-it-MIS: solve iteratively MIS problem and assign one color at a time
 - BBQ-mIS: Branch&Bound (BB) approach to explore multiple mIS solutions and find better coloring. It exploits the [PyBnB](https://pypi.org/project/pybnb/) library to model the BB exploration.
 
 ## Unit Disk (UD) graph embeddings tutorial
 This tutorial implements a novel approach to retrieve UD graph embeddings starting from the adjacency matrix of a given graph. It is the official implementation of the work presented in our paper: [Neural-powered unit disk graph embedding: qubits connectivity for some QUBO problems](https://ieeexplore.ieee.org/document/9951178).
+- Blockade effect: we emulate the effect of pulses acting on 2 qubits to experimentally show how the coherence time of the quantum machine affects the addresable embeddings
+- GEAN model: embedder implementation to solve constrained UD graph problems
