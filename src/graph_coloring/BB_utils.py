@@ -88,8 +88,7 @@ def plot_sol(orig_G, coloring, num_colors):
                     coloring_copy[key]=new_cmap[val]
                 else:
                     coloring_copy[key]=new_cmap[0]
-        
+        f = plt.figure()
         nx.draw(orig_G, pos=dict(orig_G.nodes(data='pos')), node_color=list(coloring_copy.values()), with_labels=True, node_size=500,
-                font_weight="bold", node_shape="o")            
+                font_weight="bold", node_shape="o", ax=f.add_subplot(111)) 
         plt.show()
-        plt.close()
