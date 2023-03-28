@@ -131,11 +131,11 @@ class PulserMISSolver:
         sequence = self._define_sequence(reg) 
         count_dict = self._experiment(sequence, params)
         sorted_dict = sorted(count_dict.items(), key=lambda item: item[1], reverse=True)
-        return sorted_dict, sequence
+        return sorted_dict
 
     def solve_Pulser(self):
         ''' Solve the MIS problem associated with the graph G'''
         bounds = self._get_param_bounds()
         opt_params = self._optimize_params_scipy(bounds)
-        MIS_sol, final_sequence = self._get_mis_solutions(opt_params) 
+        MIS_sol = self._get_mis_solutions(opt_params) 
         return MIS_sol

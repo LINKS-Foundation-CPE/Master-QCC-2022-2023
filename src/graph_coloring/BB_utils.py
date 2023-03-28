@@ -4,17 +4,6 @@ from numpy.linalg import eigh
 import math
 import matplotlib.pyplot as plt
 
-def compute_obj(G, colors_used, previous_coloring):
-    if len(G.edges())>0:
-        obj = colors_used+len(G.nodes())
-        for greedy_color_node in G.nodes():
-            colors_used = colors_used + 1
-            previous_coloring[greedy_color_node] = colors_used
-    else:
-        for node in G.nodes():
-            previous_coloring[node]=colors_used+1
-        obj = colors_used+1
-    return obj, previous_coloring
 
 def compute_subgraph(x, G):
     MIS_set = []
@@ -45,7 +34,10 @@ def compute_LB(x, G):
         EdwardsLB = math.floor(remaining_nodes/(remaining_nodes-lambda_1))
         LB=max([HoffmanLB, EdwardsLB, ElphicLB])
     else:
-        LB=1
+        if remaining_nodes==0:
+            LB=0
+        else:
+            LB=1
     return H, LB, MIS_set
 
 def compute_UB(H):
@@ -97,9 +89,7 @@ def plot_sol(orig_G, coloring, num_colors):
                 else:
                     coloring_copy[key]=new_cmap[0]
         
-        f = plt.figure()
         nx.draw(orig_G, pos=dict(orig_G.nodes(data='pos')), node_color=list(coloring_copy.values()), with_labels=True, node_size=500,
-                font_weight="bold", node_shape="o", ax=f.add_subplot(111))            
-        nx.draw_networkx_edges(orig_G, dict(orig_G.nodes(data='pos')))
+                font_weight="bold", node_shape="o")            
         plt.show()
         plt.close()
