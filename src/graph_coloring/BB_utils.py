@@ -18,9 +18,9 @@ def compute_subgraph(x, G):
 def compute_LB(x, G):
     H, MIS_set = compute_subgraph(x, G)
     num_edges = len(H.edges())
-    A = nx.to_numpy_matrix(H)    
-    if num_edges>0: 
-        remaining_nodes = len(H.nodes())            
+    A = nx.to_numpy_matrix(H) 
+    remaining_nodes = len(H.nodes())   
+    if num_edges>0:            
         # this method is aware that matrix A is symmetric
         eigs, _ = eigh(A)
         eigs=np.sort(eigs)
