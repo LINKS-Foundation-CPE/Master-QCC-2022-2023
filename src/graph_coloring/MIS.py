@@ -1,6 +1,7 @@
 from pulser import Pulse, Sequence, Register
-from pulser.devices import Chadoq2
-from pulser_simulation import Simulation
+from pulser.devices import Device
+from pulser_simulation import QutipEmulator
+from pulser.channels import Rydberg
 import numpy as np
 import networkx as nx
 import warnings
@@ -8,7 +9,25 @@ from scipy.optimize import minimize, Bounds
 from scipy.spatial import distance_matrix
 import random
 
-Chadoq2.change_rydberg_level(60)
+AnalogDevice = Device(
+            name="AnalogDevice",
+            dimensions=2,
+            rydberg_level=60,
+            max_atom_num=25,
+            max_radial_distance=35,
+            min_atom_distance=4,
+            channel_objects=(
+            Rydberg.Global(
+                max_abs_detuning=2 * np.pi * 20,
+                max_amp=2 * np.pi * 2,
+                clock_period=4,
+                min_duration=16,
+                mod_bandwidth=8
+            ),
+        ),
+        )
+
+
 random.seed(0)
 warnings.filterwarnings('ignore')
     
@@ -46,7 +65,7 @@ class PulserMISSolver:
 
     def _define_sequence(self, register):
         # Parametrized sequence
-        seq = Sequence(register, Chadoq2)
+        seq = Sequence(register, AnalogDevice)
         seq.declare_channel('ch0','rydberg_global')
         # add parametrize sequence
         t_list = seq.declare_variable('t_list', size=self.num_layers)
@@ -85,9 +104,9 @@ class PulserMISSolver:
     def _experiment(self, sequence, parameters):                
         t_params, s_params = np.reshape(np.array(parameters), (self.num_params, self.num_layers))
         assigned_sequence = sequence.build(t_list=t_params, s_list=s_params)    
-        simul = Simulation(assigned_sequence, sampling_rate=self.sampling_rate)
-        simul.initial_state='all-ground'
-        simul.evaluation_times = np.linspace(0, simul._tot_duration/1000, 10)
+        simul = QutipEmulator.from_sequence(assigned_sequence, sampling_rate=self.sampling_rate)
+        simul.set_initial_state='all-ground'
+        simul.set_evaluation_times = np.linspace(0, simul._tot_duration/1000, 10)
         results = simul.run(nsteps=10000)
         return results.sample_final_state(N_samples=self.num_samples)
 
@@ -100,7 +119,7 @@ class PulserMISSolver:
         dist_matrix = distance_matrix(pos, pos)
         A = nx.to_numpy_matrix(self.G)
         blockade_radius = dist_matrix[A==1].max() 
-        self.rabi_freq = Chadoq2.rabi_from_blockade(blockade_radius)
+        self.rabi_freq = AnalogDevice.rabi_from_blockade(blockade_radius)
         # limit rabi frequency to the maxixmum value allowed for the device
         self.rabi_freq = min(self.rabi_freq, self.omega_max) 
         # Bounds for max total pulse length (machine max = 100 mus)
