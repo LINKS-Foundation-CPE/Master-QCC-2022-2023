@@ -1,4 +1,5 @@
-from qiskit import QuantumCircuit, Aer
+from qiskit import QuantumCircuit
+from qiskit_aer import AerSimulator
 import networkx as nx
 
 def maxcut_obj(solution, graph):
@@ -76,11 +77,9 @@ def get_expectation(graph, shots=512):
     Args:
         graph: networkx graph
     """
-    backend = Aer.get_backend('qasm_simulator')
-
     def execute_circ(theta):
         qc = create_qaoa_circ(graph, theta)
-        counts = backend.run(qc, seed_simulator=10,
+        counts = AerSimulator().run(qc, seed_simulator=10,
                              nshots=shots).result().get_counts()
         return compute_expectation(counts, graph)
 
